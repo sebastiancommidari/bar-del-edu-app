@@ -76,7 +76,7 @@ function Cart({ cart, setCart, goHome }) {
   };
 
   return (
-    <Box pb={6}>
+    <Box pt={2} pb={6}>
       {cartItems.map((product, index) => (
         <Box key={index} p={4} borderWidth="1px" borderRadius="lg" mb={2} display="flex" justifyContent="space-between" alignItems="center">
           <Box>

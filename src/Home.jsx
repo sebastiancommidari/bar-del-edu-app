@@ -87,7 +87,7 @@ function Home({ addToCart }) {
   };
 
   return (
-    <Box pb={6}>
+    <Box pb={6} pt={2}>
       <Input
         placeholder="Buscar productos"
         value={searchTerm}
