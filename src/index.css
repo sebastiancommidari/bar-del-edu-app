@@ -57,11 +57,12 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: white;
+  border: 3px solid
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto teal;
 }
 
 @media (prefers-color-scheme: light) {
