@@ -36,10 +36,46 @@ function Footer({ goHome, goCart, goHistory, goManage }) {
   return (
     <Box as={isMobile ? 'footer' : 'aside'} {...(isMobile ? footerStyle : sidebarStyle)}>
       <Flex direction={isMobile ? 'row' : 'column'} justify={isMobile ? 'space-around' : 'center'} align="center">
-        <IconButton aria-label="Home" icon={<FaHome fontSize="30px" />} onClick={goHome} m={2} />
-        <IconButton aria-label="Cart" icon={<FaShoppingCart fontSize="30px" />} onClick={goCart} m={2} />
-        <IconButton aria-label="History" icon={<FaHistory fontSize="30px" />} onClick={goHistory} m={2} />
-        <IconButton aria-label="Manage" icon={<FaEdit fontSize="30px" />} onClick={goManage} m={2} />
+        <IconButton
+          aria-label="Home"
+          icon={<FaHome fontSize="30px" />}
+          onClick={goHome}
+          m={2}
+          color="white" // Color del icono
+          bgColor="black" // Color de fondo del botón
+          _hover={{ bgColor: 'black' }} // Color de fondo al pasar el ratón por encima
+          _active={{ bgColor: 'teal' }} // Color de fondo al hacer clic
+        />
+        <IconButton
+          aria-label="Cart"
+          icon={<FaShoppingCart fontSize="30px" />}
+          onClick={goCart}
+          m={2}
+          color="white" // Color del icono
+          bgColor="black" // Color de fondo del botón
+          _hover={{ bgColor: 'black' }} // Color de fondo al pasar el ratón por encima
+          _active={{ bgColor: 'teal' }} // Color de fondo al hacer clic
+        />
+        <IconButton
+          aria-label="History"
+          icon={<FaHistory fontSize="30px" />}
+          onClick={goHistory}
+          m={2}
+          color="white" // Color del icono
+          bgColor="black" // Color de fondo del botón
+          _hover={{ bgColor: 'black' }} // Color de fondo al pasar el ratón por encima
+          _active={{ bgColor: 'teal' }} // Color de fondo al hacer clic
+        />
+        <IconButton
+          aria-label="Manage"
+          icon={<FaEdit fontSize="30px" />}
+          onClick={goManage}
+          m={2}
+          color="white" // Color del icono
+          bgColor="black" // Color de fondo del botón
+          _hover={{ bgColor: 'black' }} // Color de fondo al pasar el ratón por encima
+          _active={{ bgColor: 'teal' }} // Color de fondo al hacer clic
+        />
       </Flex>
     </Box>
   );

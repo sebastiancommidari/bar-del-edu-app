@@ -58,7 +58,7 @@ button {
 }
 button:hover {
   border-color: white;
-  border: 3px solid
+  border: 2px solid
 }
 button:focus,
 button:focus-visible {
