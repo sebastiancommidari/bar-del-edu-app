@@ -129,13 +129,13 @@ function Home({ addToCart }) {
                 </VStack>
                 <VStack align="flex-end">
                   <Center>
-                    <HStack>
+                    <HStack mt={2}>
                       <IconButton icon={<MinusIcon />} onClick={() => handleQuantityChange(product.id, -1)} />
                       <Text fontSize="18px">{quantity[product.id] || 1}</Text>
                       <IconButton icon={<AddIcon />} onClick={() => handleQuantityChange(product.id, 1)} />
                     </HStack>
                   </Center>
-                  <Button mt={2} fontSize="14px" colorScheme="teal" onClick={() => addToCart({ ...product, quantity: quantity[product.id] || 1 })}>Sumar al Carrito</Button>
+                  <Button mt={3} fontSize="14px" colorScheme="green" onClick={() => addToCart({ ...product, quantity: quantity[product.id] || 1 })}>Sumar al Carrito</Button>
                 </VStack>
               </Flex>
             </Box>
