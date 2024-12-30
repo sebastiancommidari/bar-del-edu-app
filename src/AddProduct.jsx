@@ -53,7 +53,7 @@ function AddProduct({ goBack }) {
         title: "Categoría inválida.",
         description: "El nombre de la categoría no puede estar vacío.",
         status: "error",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
       return;
@@ -65,7 +65,7 @@ function AddProduct({ goBack }) {
         title: "Categoría agregada.",
         description: "La nueva categoría ha sido agregada con éxito.",
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
       setNewCategory('');
@@ -78,7 +78,7 @@ function AddProduct({ goBack }) {
         title: "Error.",
         description: `Hubo un problema al agregar la categoría: ${error.message}`,
         status: "error",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     }
@@ -90,7 +90,7 @@ function AddProduct({ goBack }) {
         title: "Proveedor inválido.",
         description: "El nombre del proveedor no puede estar vacío.",
         status: "error",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
       return;
@@ -102,7 +102,7 @@ function AddProduct({ goBack }) {
         title: "Proveedor agregado.",
         description: "El nuevo proveedor ha sido agregado con éxito.",
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
       setNewProvider('');
@@ -115,7 +115,7 @@ function AddProduct({ goBack }) {
         title: "Error.",
         description: `Hubo un problema al agregar el proveedor: ${error.message}`,
         status: "error",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     }
@@ -128,7 +128,7 @@ function AddProduct({ goBack }) {
         title: "Producto agregado.",
         description: "El producto se ha agregado correctamente.",
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
       goBack();
@@ -137,7 +137,7 @@ function AddProduct({ goBack }) {
         title: "Error.",
         description: `Hubo un problema al agregar el producto: ${error.message}`,
         status: "error",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     }

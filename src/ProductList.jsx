@@ -90,7 +90,7 @@ function ProductList({ goHome }) {
         title: "Producto eliminado.",
         description: "El producto ha sido eliminado con éxito.",
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     } catch (error) {
@@ -98,7 +98,7 @@ function ProductList({ goHome }) {
         title: "Error.",
         description: `Hubo un problema al eliminar el producto: ${error.message}`,
         status: "error",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     }
@@ -113,7 +113,7 @@ function ProductList({ goHome }) {
   }
 
   return (
-    <Box minHeight="100vh" bg="white" marginTop={6} pb={6}>
+    <Box minHeight="100vh" bg="white" pt={2} pb={6}>
       <Input
         placeholder="Buscar productos"
         value={searchTerm}

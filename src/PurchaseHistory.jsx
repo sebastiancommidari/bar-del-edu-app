@@ -26,8 +26,8 @@ function PurchaseHistory({ goHome }) {
   }, []);
 
   return (
-    <Box pb={6}>
-      <Button mb={3} mt={1} colorScheme="gray" onClick={goHome} width="100%">Volver a Inicio</Button>
+    <Box pb={6} pt={2}>
+      <Button mb={3} colorScheme="gray" onClick={goHome} width="100%">Volver a Inicio</Button>
       {loading ? (
         <Center>
           <Text>Cargando historial de compras...</Text>

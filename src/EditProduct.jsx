@@ -15,7 +15,7 @@ function EditProduct({ product, setEditingProduct }) {
         title: "Producto actualizado.",
         description: "El producto se ha actualizado correctamente.",
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
       setEditingProduct(null);
@@ -24,7 +24,7 @@ function EditProduct({ product, setEditingProduct }) {
         title: "Error.",
         description: `Hubo un problema al actualizar el producto: ${error.message}`,
         status: "error",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     }
