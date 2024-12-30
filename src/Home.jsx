@@ -24,7 +24,7 @@ function Home({ addToCart }) {
     setLoading(true);
     const q = query(collection(db, 'products'));
     const querySnapshot = await getDocs(q);
-    const productsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const productsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => a.name.localeCompare(b.name));
     localStorage.setItem('products', JSON.stringify(productsList));
     setProducts(productsList);
     setFilteredProducts(productsList);
@@ -55,8 +55,8 @@ function Home({ addToCart }) {
       fetchCategories();
       fetchProviders();
     } else {
-      setProducts(cachedProducts);
-      setFilteredProducts(cachedProducts);
+      setProducts(cachedProducts.sort((a, b) => a.name.localeCompare(b.name)));
+      setFilteredProducts(cachedProducts.sort((a, b) => a.name.localeCompare(b.name)));
       setCategories(cachedCategories);
       setProviders(cachedProviders);
       fetchProducts(); // Always fetch and update in the background for latest data
@@ -74,7 +74,7 @@ function Home({ addToCart }) {
         (!categoryFilter || product.category === categoryFilter) &&
         (!providerFilter || product.provider === providerFilter)
       );
-    });
+    }).sort((a, b) => a.name.localeCompare(b.name));
     setFilteredProducts(filtered);
   }, [searchTerm, categoryFilter, providerFilter, products]);
 

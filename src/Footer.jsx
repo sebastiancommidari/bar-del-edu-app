@@ -38,7 +38,7 @@ function Footer({ goHome, goCart, goHistory, goManage }) {
       <Flex direction={isMobile ? 'row' : 'column'} justify={isMobile ? 'space-around' : 'center'} align="center">
         <IconButton
           aria-label="Home"
-          icon={<FaHome fontSize="30px" />}
+          icon={<FaHome fontSize="28px" />}
           onClick={goHome}
           m={2}
           color="black" // Color del icono
