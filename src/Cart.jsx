@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Button, useToast, IconButton } from '@chakra-ui/react';
+import { Box, Text, Button, useToast, IconButton, HStack } from '@chakra-ui/react';
 import { db } from './firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import { CloseIcon } from '@chakra-ui/icons'; // Importar ícono de Close
@@ -20,12 +20,23 @@ function Cart({ cart, setCart, goHome }) {
       title: "Producto eliminado.",
       description: "El producto se ha eliminado del carrito.",
       status: "info",
-      duration: 5000,
+      duration: 2000,
       isClosable: true,
     });
   };
 
   const completePurchase = async () => {
+    if (cartItems.length === 0) {
+      toast({
+        title: "Carrito vacío.",
+        description: "No puedes completar la compra con el carrito vacío.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       const purchaseData = {
         items: cartItems,
@@ -35,10 +46,10 @@ function Cart({ cart, setCart, goHome }) {
       await addDoc(collection(db, 'purchases'), purchaseData);
       setCart([]);
       toast({
-        title: "Compra completada.",
-        description: "Tu compra se ha realizado con éxito.",
+        title: "Compra guardada.",
+        description: "Tu compra se ha guardado con éxito.",
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
       goHome();
@@ -47,7 +58,7 @@ function Cart({ cart, setCart, goHome }) {
         title: "Error.",
         description: `Hubo un problema al registrar la compra: ${error.message}`,
         status: "error",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     }
@@ -59,13 +70,13 @@ function Cart({ cart, setCart, goHome }) {
       title: "Carrito limpio.",
       description: "El carrito ha sido vaciado.",
       status: "info",
-      duration: 5000,
+      duration: 2000,
       isClosable: true,
     });
   };
 
   return (
-    <Box p={4}>
+    <Box pb={6}>
       {cartItems.map((product, index) => (
         <Box key={index} p={4} borderWidth="1px" borderRadius="lg" mb={2} display="flex" justifyContent="space-between" alignItems="center">
           <Box>
@@ -75,10 +86,12 @@ function Cart({ cart, setCart, goHome }) {
           <IconButton colorScheme="red" icon={<CloseIcon />} onClick={() => removeFromCart(index)} /> {/* Botón de eliminar con ícono */}
         </Box>
       ))}
-      <Text fontWeight="bold" fontSize="xl" mb={2} mt={4} ml={2}>Total: ${total}</Text>
-      <Button mt={4} ml={2} colorScheme="red" onClick={clearCart}>Vaciar Carrito</Button>
-      <Button mt={4} ml={4} colorScheme="green" onClick={completePurchase}>Cerrar Compra</Button>
-      <Button mt={4} ml={2} colorScheme="gray" onClick={goHome}>Volver a Inicio</Button>
+      <Text fontWeight="bold" fontSize="30px" mb={2} mt={4} ml={2}>Total: ${total}</Text>
+      <HStack spacing={4} mt={4} width="100%">
+        <Button colorScheme="red" onClick={clearCart} width="50%">Vaciar Carrito</Button>
+        <Button colorScheme="green" onClick={completePurchase} width="50%" disabled={cartItems.length === 0}>Guardar Compra</Button>
+      </HStack>
+      <Button mt={4} colorScheme="gray" onClick={goHome} width="100%">Volver a Inicio</Button>
     </Box>
   );
 }

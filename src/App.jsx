@@ -71,9 +71,9 @@ function App() {
     }
     toast({
       title: "Producto agregado.",
-      description: `Has agregado ${productWithQuantity.name} (${productWithQuantity.quantity}) al carrito.`,
+      description: `Has agregado (${productWithQuantity.quantity}) ${productWithQuantity.name} al carrito.`,
       status: "success",
-      duration: 5000,
+      duration: 2000,
       isClosable: true,
     });
   };

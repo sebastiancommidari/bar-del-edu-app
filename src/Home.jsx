@@ -87,7 +87,7 @@ function Home({ addToCart }) {
   };
 
   return (
-    <Box p={4}>
+    <Box pb={6}>
       <Input
         placeholder="Buscar productos"
         value={searchTerm}
@@ -122,20 +122,20 @@ function Home({ addToCart }) {
         <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
           {filteredProducts.map((product) => (
             <Box key={product.id} p={4} borderWidth="1px" borderRadius="lg">
-              <Flex justify="space-between" align="flex-start">
-                <VStack align="flex-start">
-                  <Text fontWeight="bold" fontSize="22px">{product.name}</Text>
+              <Flex justify="space-between" align="center" height="100%">
+                <VStack align="flex-start" justify="center" width="50%">
+                  <Text fontWeight="bold" fontSize="21px">{product.name}</Text>
                   <Text fontSize="19px">Precio: <strong>${product.price}</strong></Text>
                 </VStack>
-                <VStack align="flex-end">
+                <VStack justify="center" spacing={4}>
                   <Center>
-                    <HStack mt={1}>
+                    <HStack>
                       <IconButton icon={<MinusIcon />} onClick={() => handleQuantityChange(product.id, -1)} />
                       <Text fontSize="18px">{quantity[product.id] || 1}</Text>
                       <IconButton icon={<AddIcon />} onClick={() => handleQuantityChange(product.id, 1)} />
                     </HStack>
                   </Center>
-                  <Button mt={3} fontSize="14px" colorScheme="green" onClick={() => addToCart({ ...product, quantity: quantity[product.id] || 1 })}>Agregar al Carrito</Button>
+                  <Button fontSize="14px" colorScheme="green" onClick={() => addToCart({ ...product, quantity: quantity[product.id] || 1 })}>Agregar al Carrito</Button>
                 </VStack>
               </Flex>
             </Box>

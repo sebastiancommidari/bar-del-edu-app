@@ -25,7 +25,7 @@ function ProductList({ goHome }) {
   const fetchProducts = async () => {
     const q = query(collection(db, 'products'));
     const querySnapshot = await getDocs(q);
-    const productsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const productsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort((a, b) => a.name.localeCompare(b.name));
     localStorage.setItem('products', JSON.stringify(productsList));
     setAllProducts(productsList);
     setProducts(productsList);
@@ -33,14 +33,14 @@ function ProductList({ goHome }) {
 
   const fetchCategories = async () => {
     const querySnapshot = await getDocs(collection(db, 'categories'));
-    const fetchedCategories = querySnapshot.docs.map(doc => doc.data().name);
+    const fetchedCategories = querySnapshot.docs.map(doc => doc.data().name).sort();
     localStorage.setItem('categories', JSON.stringify(fetchedCategories));
     setCategories(fetchedCategories);
   };
 
   const fetchProviders = async () => {
     const querySnapshot = await getDocs(collection(db, 'providers'));
-    const fetchedProviders = querySnapshot.docs.map(doc => doc.data().name);
+    const fetchedProviders = querySnapshot.docs.map(doc => doc.data().name).sort();
     localStorage.setItem('providers', JSON.stringify(fetchedProviders));
     setProviders(fetchedProviders);
   };
@@ -55,10 +55,10 @@ function ProductList({ goHome }) {
       fetchCategories();
       fetchProviders();
     } else {
-      setAllProducts(cachedProducts);
-      setProducts(cachedProducts);
-      setCategories(cachedCategories);
-      setProviders(cachedProviders);
+      setAllProducts(cachedProducts.sort((a, b) => a.name.localeCompare(b.name)));
+      setProducts(cachedProducts.sort((a, b) => a.name.localeCompare(b.name)));
+      setCategories(cachedCategories.sort());
+      setProviders(cachedProviders.sort());
       fetchProducts(); // Always fetch and update in the background for latest data
     }
   };
@@ -113,7 +113,7 @@ function ProductList({ goHome }) {
   }
 
   return (
-    <Box minHeight="100vh" bg="white" marginTop={6}>
+    <Box minHeight="100vh" bg="white" marginTop={6} pb={6}>
       <Input
         placeholder="Buscar productos"
         value={searchTerm}
@@ -141,8 +141,8 @@ function ProductList({ goHome }) {
         ))}
       </Select>
       <Center mb={4}>
-        <Button colorScheme="green" onClick={() => setAddingProduct(true)}>+ Nuevo Producto</Button>
-        <Button ml={2} colorScheme="gray" onClick={goHome}>Volver a Inicio</Button>
+        <Button colorScheme="green" width="50%" onClick={() => setAddingProduct(true)}>+ Nuevo Producto</Button>
+        <Button ml={2} colorScheme="gray" width="50%" onClick={goHome}>Volver a Inicio</Button>
       </Center>
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
         {products.map((product) => (
@@ -154,8 +154,8 @@ function ProductList({ goHome }) {
               <Text>Precio: ${product.price}</Text>
             </Box>
             <Box>
-              <IconButton icon={<EditIcon />} colorScheme="teal" onClick={() => handleEdit(product)} />
-              <IconButton icon={<DeleteIcon />} colorScheme="red" ml={2} onClick={() => handleDelete(product.id)} />
+              <IconButton icon={<EditIcon />} colorScheme="teal" width="45%" onClick={() => handleEdit(product)} />
+              <IconButton icon={<DeleteIcon />} colorScheme="red" width="45%" ml={2} onClick={() => handleDelete(product.id)} />
             </Box>
           </Box>
         ))}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Box, Button, Input, Select, FormErrorMessage, FormControl, FormLabel, useToast, Text, HStack } from '@chakra-ui/react';
+import { Box, Button, Input, Select, FormErrorMessage, FormControl, FormLabel, useToast, HStack } from '@chakra-ui/react';
 import { db } from './firebaseConfig';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 
@@ -16,14 +16,14 @@ function AddProduct({ goBack }) {
 
   const fetchCategories = async () => {
     const querySnapshot = await getDocs(collection(db, 'categories'));
-    const fetchedCategories = querySnapshot.docs.map(doc => doc.data().name);
+    const fetchedCategories = querySnapshot.docs.map(doc => doc.data().name).sort();
     localStorage.setItem('categories', JSON.stringify(fetchedCategories));
     setCategories(fetchedCategories);
   };
 
   const fetchProviders = async () => {
     const querySnapshot = await getDocs(collection(db, 'providers'));
-    const fetchedProviders = querySnapshot.docs.map(doc => doc.data().name);
+    const fetchedProviders = querySnapshot.docs.map(doc => doc.data().name).sort();
     localStorage.setItem('providers', JSON.stringify(fetchedProviders));
     setProviders(fetchedProviders);
   };
@@ -36,8 +36,8 @@ function AddProduct({ goBack }) {
       fetchCategories();
       fetchProviders();
     } else {
-      setCategories(cachedCategories);
-      setProviders(cachedProviders);
+      setCategories(cachedCategories.sort());
+      setProviders(cachedProviders.sort());
       fetchCategories(); // Always fetch and update in the background for latest data
       fetchProviders();  // Always fetch and update in the background for latest data
     }
@@ -48,6 +48,17 @@ function AddProduct({ goBack }) {
   }, []);
 
   const addCategory = async () => {
+    if (newCategory.trim() === '') {
+      toast({
+        title: "Categoría inválida.",
+        description: "El nombre de la categoría no puede estar vacío.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       await addDoc(collection(db, 'categories'), { name: newCategory });
       toast({
@@ -60,8 +71,8 @@ function AddProduct({ goBack }) {
       setNewCategory('');
       setAddingCategory(false);
       const querySnapshot = await getDocs(collection(db, 'categories'));
-      setCategories(querySnapshot.docs.map(doc => doc.data().name));
-      localStorage.setItem('categories', JSON.stringify(querySnapshot.docs.map(doc => doc.data().name)));
+      setCategories(querySnapshot.docs.map(doc => doc.data().name).sort());
+      localStorage.setItem('categories', JSON.stringify(querySnapshot.docs.map(doc => doc.data().name).sort()));
     } catch (error) {
       toast({
         title: "Error.",
@@ -74,6 +85,17 @@ function AddProduct({ goBack }) {
   };
 
   const addProvider = async () => {
+    if (newProvider.trim() === '') {
+      toast({
+        title: "Proveedor inválido.",
+        description: "El nombre del proveedor no puede estar vacío.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       await addDoc(collection(db, 'providers'), { name: newProvider });
       toast({
@@ -86,8 +108,8 @@ function AddProduct({ goBack }) {
       setNewProvider('');
       setAddingProvider(false);
       const querySnapshot = await getDocs(collection(db, 'providers'));
-      setProviders(querySnapshot.docs.map(doc => doc.data().name));
-      localStorage.setItem('providers', JSON.stringify(querySnapshot.docs.map(doc => doc.data().name)));
+      setProviders(querySnapshot.docs.map(doc => doc.data().name).sort());
+      localStorage.setItem('providers', JSON.stringify(querySnapshot.docs.map(doc => doc.data().name).sort()));
     } catch (error) {
       toast({
         title: "Error.",
@@ -170,13 +192,12 @@ function AddProduct({ goBack }) {
             {errors.provider && errors.provider.message}
           </FormErrorMessage>
         </FormControl>
-        <HStack spacing={4} mt={4}>
-          <Button type="submit" colorScheme="green">+ Agregar Producto</Button>
-          <Button colorScheme="gray" onClick={goBack}>Volver Atrás</Button>
+        <HStack spacing={4} mt={4} width="100%">
+          <Button type="submit" colorScheme="green" width="50%">Agregar Producto</Button>
+          <Button colorScheme="gray" onClick={goBack} width="50%">Volver Atrás</Button>
         </HStack>
       </form>
-      <Box mt={4}>
-        <Text fontWeight="bold">Gestionar Categorías</Text>
+      <Box mt={4} width="100%">
         {addingCategory ? (
           <Box mt={2}>
             <Input
@@ -185,15 +206,14 @@ function AddProduct({ goBack }) {
               onChange={(e) => setNewCategory(e.target.value)}
               mb={2}
             />
-            <Button colorScheme="teal" onClick={addCategory}>Agregar Categoría</Button>
-            <Button ml={2} colorScheme="gray" onClick={() => setAddingCategory(false)}>Cancelar</Button>
+            <Button colorScheme="teal" onClick={addCategory} width="100%">Agregar Categoría</Button>
+            <Button ml={2} colorScheme="gray" onClick={() => setAddingCategory(false)} width="100%">Cancelar</Button>
           </Box>
         ) : (
-          <Button colorScheme="blue" onClick={() => setAddingCategory(true)}>Agregar Nueva Categoría</Button>
+          <Button colorScheme="blue" onClick={() => setAddingCategory(true)} width="100%">Agregar Nueva Categoría</Button>
         )}
       </Box>
-      <Box mt={4}>
-        <Text fontWeight="bold">Gestionar Proveedores</Text>
+      <Box mt={4} width="100%">
         {addingProvider ? (
           <Box mt={2}>
             <Input
@@ -202,11 +222,11 @@ function AddProduct({ goBack }) {
               onChange={(e) => setNewProvider(e.target.value)}
               mb={2}
             />
-            <Button colorScheme="teal" onClick={addProvider}>Agregar Proveedor</Button>
-            <Button ml={2} colorScheme="gray" onClick={() => setAddingProvider(false)}>Cancelar</Button>
+            <Button colorScheme="teal" onClick={addProvider} width="100%">Agregar Proveedor</Button>
+            <Button ml={2} colorScheme="gray" onClick={() => setAddingProvider(false)} width="100%">Cancelar</Button>
           </Box>
         ) : (
-          <Button colorScheme="blue" onClick={() => setAddingProvider(true)}>Agregar Nuevo Proveedor</Button>
+          <Button colorScheme="blue" onClick={() => setAddingProvider(true)} width="100%">Agregar Nuevo Proveedor</Button>
         )}
       </Box>
     </Box>

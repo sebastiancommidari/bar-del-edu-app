@@ -26,7 +26,8 @@ function PurchaseHistory({ goHome }) {
   }, []);
 
   return (
-    <Box p={4}>
+    <Box pb={6}>
+      <Button mb={3} mt={1} colorScheme="gray" onClick={goHome} width="100%">Volver a Inicio</Button>
       {loading ? (
         <Center>
           <Text>Cargando historial de compras...</Text>
@@ -35,7 +36,7 @@ function PurchaseHistory({ goHome }) {
         purchases.map((purchase, index) => (
           <Box key={purchase.id} p={4} borderWidth="1px" borderRadius="lg" mb={2}>
             <Text fontWeight="bold">
-              #{purchase.number} ({DateTime.fromISO(purchase.timestamp).setZone('America/Argentina/Buenos_Aires').toFormat('dd/LL/yyyy HH:mm:ss')} Hs.)
+              # {DateTime.fromISO(purchase.timestamp).setZone('America/Argentina/Buenos_Aires').toFormat('dd/LL/yyyy HH:mm:ss')} Hs.
             </Text>
             <Text><strong>Total: ${purchase.total}</strong></Text>
             {purchase.items.map((item, itemIndex) => (
@@ -44,7 +45,6 @@ function PurchaseHistory({ goHome }) {
           </Box>
         ))
       )}
-      <Button mt={4} colorScheme="gray" onClick={goHome}>Volver a Inicio</Button>
     </Box>
   );
 }
