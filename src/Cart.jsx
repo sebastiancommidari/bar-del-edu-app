@@ -77,7 +77,7 @@ function Cart({ cart, setCart, goHome }) {
       ))}
       <Text fontWeight="bold" fontSize="xl" mb={2} mt={4} ml={2}>Total: ${total}</Text>
       <Button mt={4} ml={2} colorScheme="red" onClick={clearCart}>Vaciar Carrito</Button>
-      <Button mt={4} ml={4} colorScheme="green" onClick={completePurchase}>Completar Compra</Button>
+      <Button mt={4} ml={4} colorScheme="green" onClick={completePurchase}>Cerrar Compra</Button>
       <Button mt={4} ml={2} colorScheme="gray" onClick={goHome}>Volver a Inicio</Button>
     </Box>
   );
