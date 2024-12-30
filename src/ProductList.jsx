@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, SimpleGrid, Text, Input, Select, useToast, IconButton, Center } from '@chakra-ui/react';
+import { Box, Button, SimpleGrid, Text, Input, Select, useToast, IconButton, Center, VStack, Flex } from '@chakra-ui/react';
 import { db } from './firebaseConfig';
 import { collection, getDocs, deleteDoc, doc, query } from 'firebase/firestore';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
@@ -147,16 +147,16 @@ function ProductList({ goHome }) {
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={4}>
         {products.map((product) => (
           <Box key={product.id} p={4} borderWidth="1px" borderRadius="lg" display="flex" justifyContent="space-between" alignItems="center" width="100%">
-            <Box>
+            <Box width="80%">
               <Text fontWeight="bold">{product.name}</Text>
               <Text>Categoría: {product.category}</Text>
               <Text>Proveedor: {product.provider}</Text>
               <Text>Precio: ${product.price}</Text>
             </Box>
-            <Box>
-              <IconButton icon={<EditIcon />} colorScheme="teal" width="45%" onClick={() => handleEdit(product)} />
-              <IconButton icon={<DeleteIcon />} colorScheme="red" width="45%" ml={2} onClick={() => handleDelete(product.id)} />
-            </Box>
+            <VStack width="20%" alignItems="center">
+              <IconButton icon={<EditIcon />} colorScheme="teal" onClick={() => handleEdit(product)} />
+              <IconButton icon={<DeleteIcon />} colorScheme="red" onClick={() => handleDelete(product.id)} />
+            </VStack>
           </Box>
         ))}
       </SimpleGrid>
