@@ -144,7 +144,7 @@ function AddProduct({ goBack }) {
   };
 
   return (
-    <Box p={4}>
+    <Box pt={2} pb={6}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.name}>
           <FormLabel>Nombre del producto</FormLabel>

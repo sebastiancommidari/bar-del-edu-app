@@ -31,7 +31,7 @@ function EditProduct({ product, setEditingProduct }) {
   };
 
   return (
-    <Box p={4}>
+    <Box pt={2} pb={6}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.name}>
           <FormLabel>Nombre del producto</FormLabel>
@@ -54,7 +54,7 @@ function EditProduct({ product, setEditingProduct }) {
           </FormErrorMessage>
         </FormControl>
         <HStack spacing={4} mt={4} width="100%">
-          <Button type="submit" colorScheme="teal" width="50%">Actualizar Producto</Button>
+          <Button type="submit" colorScheme="green" width="50%">Actualizar Producto</Button>
           <Button colorScheme="gray" onClick={() => setEditingProduct(null)} width="50%">Volver Atrás</Button>
         </HStack>
       </form>
