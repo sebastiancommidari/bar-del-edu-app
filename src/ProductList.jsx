@@ -7,12 +7,12 @@ import EditProduct from './EditProduct';
 import AddProduct from './AddProduct';
 
 function ProductList({ goHome }) {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(JSON.parse(localStorage.getItem('products')) || []);
   const [allProducts, setAllProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [addingProduct, setAddingProduct] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [providers, setProviders] = useState([]);
+  const [categories, setCategories] = useState(JSON.parse(localStorage.getItem('categories')) || []);
+  const [providers, setProviders] = useState(JSON.parse(localStorage.getItem('providers')) || []);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [providerFilter, setProviderFilter] = useState('');
@@ -22,28 +22,49 @@ function ProductList({ goHome }) {
     return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   };
 
+  const fetchProducts = async () => {
+    const q = query(collection(db, 'products'));
+    const querySnapshot = await getDocs(q);
+    const productsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    localStorage.setItem('products', JSON.stringify(productsList));
+    setAllProducts(productsList);
+    setProducts(productsList);
+  };
+
+  const fetchCategories = async () => {
+    const querySnapshot = await getDocs(collection(db, 'categories'));
+    const fetchedCategories = querySnapshot.docs.map(doc => doc.data().name);
+    localStorage.setItem('categories', JSON.stringify(fetchedCategories));
+    setCategories(fetchedCategories);
+  };
+
+  const fetchProviders = async () => {
+    const querySnapshot = await getDocs(collection(db, 'providers'));
+    const fetchedProviders = querySnapshot.docs.map(doc => doc.data().name);
+    localStorage.setItem('providers', JSON.stringify(fetchedProviders));
+    setProviders(fetchedProviders);
+  };
+
+  const verifyAndUpdateData = () => {
+    const cachedProducts = JSON.parse(localStorage.getItem('products')) || [];
+    const cachedCategories = JSON.parse(localStorage.getItem('categories')) || [];
+    const cachedProviders = JSON.parse(localStorage.getItem('providers')) || [];
+
+    if (!cachedProducts.length || !cachedCategories.length || !cachedProviders.length) {
+      fetchProducts();
+      fetchCategories();
+      fetchProviders();
+    } else {
+      setAllProducts(cachedProducts);
+      setProducts(cachedProducts);
+      setCategories(cachedCategories);
+      setProviders(cachedProviders);
+      fetchProducts(); // Always fetch and update in the background for latest data
+    }
+  };
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      const q = query(collection(db, 'products'));
-      const querySnapshot = await getDocs(q);
-      const productsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setAllProducts(productsList);
-      setProducts(productsList);
-    };
-
-    const fetchCategories = async () => {
-      const querySnapshot = await getDocs(collection(db, 'categories'));
-      setCategories(querySnapshot.docs.map(doc => doc.data().name));
-    };
-
-    const fetchProviders = async () => {
-      const querySnapshot = await getDocs(collection(db, 'providers'));
-      setProviders(querySnapshot.docs.map(doc => doc.data().name));
-    };
-
-    fetchProducts();
-    fetchCategories();
-    fetchProviders();
+    verifyAndUpdateData();
   }, []);
 
   useEffect(() => {

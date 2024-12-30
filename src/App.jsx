@@ -8,7 +8,8 @@ import PurchaseHistory from './PurchaseHistory';
 import ProductList from './ProductList';
 import Container from './Container';
 import PageHeader from './PageHeader';
-import { collection, getDocs } from 'firebase/firestore'; // Importación correcta
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from './firebaseConfig'; // Asegúrate de importar correctamente db
 
 function useCachedData(key, fetchData) {
   const [data, setData] = useState(() => {
@@ -87,8 +88,8 @@ function App() {
             <PageHeader title={titles[view]} />
             {view === 'home' && <Home addToCart={addToCart} />}
             {view === 'cart' && <Cart cart={cart} setCart={setCart} goHome={goHome} />}
-            {view === 'history' && <PurchaseHistory goHome={goHome} />} {/* Pasar función goHome */}
-            {view === 'manage' && <ProductList goHome={goHome} categories={categories} providers={providers} />} {/* Pasar función goHome */}
+            {view === 'history' && <PurchaseHistory goHome={goHome} />}
+            {view === 'manage' && <ProductList goHome={goHome} categories={categories} providers={providers} />}
           </Container>
         </Box>
       </Flex>

@@ -1,17 +1,15 @@
-// firebaseConfig.js
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDNWss22laD_EedVA1f-3dC9aXJL_aIi_Q",
-    authDomain: "bar-del-edu.firebaseapp.com",
-    projectId: "bar-del-edu",
-    storageBucket: "bar-del-edu.firebasestorage.app",
-    messagingSenderId: "126024249589",
-    appId: "1:126024249589:web:8d43f8c8f1748f21e615bc",
-    measurementId: "G-KH0X22ZL8J"
-  };
-  
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.REACT_APP_FIREBASE_APP_MEASUREMENT_ID
+};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);

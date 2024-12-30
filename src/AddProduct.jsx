@@ -6,27 +6,45 @@ import { collection, getDocs, addDoc } from 'firebase/firestore';
 
 function AddProduct({ goBack }) {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [categories, setCategories] = useState([]);
-  const [providers, setProviders] = useState([]);
+  const [categories, setCategories] = useState(JSON.parse(localStorage.getItem('categories')) || []);
+  const [providers, setProviders] = useState(JSON.parse(localStorage.getItem('providers')) || []);
   const [newCategory, setNewCategory] = useState('');
   const [newProvider, setNewProvider] = useState('');
   const [addingCategory, setAddingCategory] = useState(false);
   const [addingProvider, setAddingProvider] = useState(false);
   const toast = useToast();
 
+  const fetchCategories = async () => {
+    const querySnapshot = await getDocs(collection(db, 'categories'));
+    const fetchedCategories = querySnapshot.docs.map(doc => doc.data().name);
+    localStorage.setItem('categories', JSON.stringify(fetchedCategories));
+    setCategories(fetchedCategories);
+  };
+
+  const fetchProviders = async () => {
+    const querySnapshot = await getDocs(collection(db, 'providers'));
+    const fetchedProviders = querySnapshot.docs.map(doc => doc.data().name);
+    localStorage.setItem('providers', JSON.stringify(fetchedProviders));
+    setProviders(fetchedProviders);
+  };
+
+  const verifyAndUpdateData = () => {
+    const cachedCategories = JSON.parse(localStorage.getItem('categories')) || [];
+    const cachedProviders = JSON.parse(localStorage.getItem('providers')) || [];
+
+    if (!cachedCategories.length || !cachedProviders.length) {
+      fetchCategories();
+      fetchProviders();
+    } else {
+      setCategories(cachedCategories);
+      setProviders(cachedProviders);
+      fetchCategories(); // Always fetch and update in the background for latest data
+      fetchProviders();  // Always fetch and update in the background for latest data
+    }
+  };
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      const querySnapshot = await getDocs(collection(db, 'categories'));
-      setCategories(querySnapshot.docs.map(doc => doc.data().name));
-    };
-
-    const fetchProviders = async () => {
-      const querySnapshot = await getDocs(collection(db, 'providers'));
-      setProviders(querySnapshot.docs.map(doc => doc.data().name));
-    };
-
-    fetchCategories();
-    fetchProviders();
+    verifyAndUpdateData();
   }, []);
 
   const addCategory = async () => {
@@ -43,6 +61,7 @@ function AddProduct({ goBack }) {
       setAddingCategory(false);
       const querySnapshot = await getDocs(collection(db, 'categories'));
       setCategories(querySnapshot.docs.map(doc => doc.data().name));
+      localStorage.setItem('categories', JSON.stringify(querySnapshot.docs.map(doc => doc.data().name)));
     } catch (error) {
       toast({
         title: "Error.",
@@ -68,6 +87,7 @@ function AddProduct({ goBack }) {
       setAddingProvider(false);
       const querySnapshot = await getDocs(collection(db, 'providers'));
       setProviders(querySnapshot.docs.map(doc => doc.data().name));
+      localStorage.setItem('providers', JSON.stringify(querySnapshot.docs.map(doc => doc.data().name)));
     } catch (error) {
       toast({
         title: "Error.",
