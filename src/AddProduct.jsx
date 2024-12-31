@@ -207,7 +207,7 @@ function AddProduct({ goBack }) {
               mb={2}
             />
             <Button colorScheme="teal" onClick={addCategory} width="100%">Agregar Categoría</Button>
-            <Button ml={2} colorScheme="gray" onClick={() => setAddingCategory(false)} width="100%">Cancelar</Button>
+            <Button mt={2} colorScheme="gray" onClick={() => setAddingCategory(false)} width="100%">Cancelar</Button>
           </Box>
         ) : (
           <Button colorScheme="blue" onClick={() => setAddingCategory(true)} width="100%">Agregar Nueva Categoría</Button>
@@ -223,7 +223,7 @@ function AddProduct({ goBack }) {
               mb={2}
             />
             <Button colorScheme="teal" onClick={addProvider} width="100%">Agregar Proveedor</Button>
-            <Button ml={2} colorScheme="gray" onClick={() => setAddingProvider(false)} width="100%">Cancelar</Button>
+            <Button mt={2} colorScheme="gray" onClick={() => setAddingProvider(false)} width="100%">Cancelar</Button>
           </Box>
         ) : (
           <Button colorScheme="blue" onClick={() => setAddingProvider(true)} width="100%">Agregar Nuevo Proveedor</Button>
